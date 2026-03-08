@@ -135,14 +135,24 @@ export default function VolunteerLoginPage() {
           </button>
         </form>
 
-        {/* Admin Login Link */}
+        {/* Organizer links */}
         <div className="mt-6 text-center text-sm" style={{ color: "#7c5a3e" }}>
-          Organization Login{" "}
+          Are you an organization?{" "}
           <button
-            onClick={() => navigate("/admin-login")}
+            onClick={() => navigate("/org-login")}
             style={{ color: "#4a7c59", fontWeight: 700 }}
           >
-            Admin Login
+            Organizer Login
+          </button>
+        </div>
+
+        <div className="mt-3 text-center text-sm" style={{ color: "#7c5a3e" }}>
+          Need an organization account?{" "}
+          <button
+            onClick={() => navigate("/org-signup")}
+            style={{ color: "#4a7c59", fontWeight: 700 }}
+          >
+            Organizer Sign Up
           </button>
         </div>
 

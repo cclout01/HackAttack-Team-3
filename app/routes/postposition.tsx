@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { ArrowLeft, Plus, X, Check } from "lucide-react";
 import { useApp } from "../context/AppContext";
+import { createPosition } from "../lib/api";
 import type { Urgency, TimeCommitment } from "../data/mockData";
 
 const CATEGORIES = ["Environment", "Food Security", "Animal Welfare", "Education", "Community", "Healthcare", "Arts & Culture", "Elderly Care", "Youth"];
@@ -24,7 +25,7 @@ const DEFAULT_IMAGES = [
 ];
 
 export default function PostPosition() {
-  const { currentOrg, postPosition } = useApp();
+  const { currentOrg } = useApp();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -78,15 +79,23 @@ export default function PostPosition() {
     return e;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       return;
     }
-    postPosition({ ...form, orgId: currentOrg.id });
-    setSubmitted(true);
+
+    try {
+      await createPosition({ ...form, orgId: currentOrg.id });
+      setSubmitted(true);
+    } catch {
+      setErrors((prev) => ({
+        ...prev,
+        form: "Could not post position. Check backend server and try again.",
+      }));
+    }
   };
 
   if (submitted) {
@@ -113,13 +122,14 @@ export default function PostPosition() {
           >
             Browse Positions
           </Link>
-          <Link
-            to="/org/dashboard"
+          <button
+            type="button"
+            onClick={() => navigate("/org/dashboard")}
             className="px-5 py-2.5 rounded-2xl text-sm"
             style={{ backgroundColor: "#4a7c59", color: "#d4e8d8", fontWeight: 600 }}
           >
             Go to Dashboard
-          </Link>
+          </button>
         </div>
       </div>
     );
@@ -130,14 +140,15 @@ export default function PostPosition() {
       {/* Header */}
       <div style={{ background: "linear-gradient(135deg, #4a2f1a 0%, #7c5a3e 100%)" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6">
-          <Link
-            to="/org/dashboard"
+          <button
+            type="button"
+            onClick={() => navigate("/org/dashboard")}
             className="inline-flex items-center gap-2 text-sm mb-4"
             style={{ color: "#d4b896" }}
           >
             <ArrowLeft size={15} />
             Back to Dashboard
-          </Link>
+          </button>
           <div className="flex items-center gap-3">
             <span className="text-3xl">{currentOrg.logo}</span>
             <div>
@@ -150,6 +161,12 @@ export default function PostPosition() {
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
         <form onSubmit={handleSubmit} className="space-y-5">
+          {errors.form && (
+            <p className="text-sm" style={{ color: "#c0392b" }}>
+              {errors.form}
+            </p>
+          )}
+
           {/* Basic Info */}
           <FormSection title="Position Details">
             <div>
@@ -434,13 +451,14 @@ export default function PostPosition() {
 
           {/* Submit */}
           <div className="flex gap-3 pb-8">
-            <Link
-              to="/org/dashboard"
+            <button
+              type="button"
+              onClick={() => navigate("/org/dashboard")}
               className="flex-1 py-4 rounded-2xl text-sm text-center"
               style={{ backgroundColor: "#f0ede8", color: "#7c5a3e" }}
             >
               Cancel
-            </Link>
+            </button>
             <button
               type="submit"
               className="flex-2 flex-1 py-4 rounded-2xl text-sm transition-all hover:opacity-90"

@@ -48,7 +48,7 @@ export default function AuthCallbackPage() {
     );
   }
 
-  if (auth.role === "ORG") return <Navigate to="/dashboard/org" replace />;
+  if (auth.role === "ORG") return <Navigate to="/org/dashboard" replace />;
   if (auth.role === "ADMIN") return <Navigate to="/admin" replace />;
   return <Navigate to="/dashboard/volunteer" replace />;
 }
