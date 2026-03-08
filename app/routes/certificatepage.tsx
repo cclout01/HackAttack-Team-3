@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router";
 import { ArrowLeft, Download, Share2, Leaf, Award, MapPin, Clock, Calendar, CheckCircle } from "lucide-react";
 import { useApp } from "../context/AppContext";
 
-export function Certificate() {
+export default function Certificate() {
   const { completionId } = useParams<{ completionId: string }>();
   const { getCompletion, getPosition, getOrg, getVolunteer } = useApp();
 
