@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Building2, Mail, Lock, Leaf } from "lucide-react";
+import { Mail, Lock, Leaf } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useApp } from "app/context/AppContext";
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
+  const { loginWithAuth, setCurrentOrgId } = useApp();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,10 +13,16 @@ export default function AdminLoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({ email, password });
+    loginWithAuth({
+      token: "mock-org-token",
+      role: "ORG",
+      userId: "org-1",
+      name: "Sample Organization",
+    });
 
-    // Later connect to backend auth
-    navigate("/admin-dashboard");
+    setCurrentOrgId("org-1");
+
+    navigate("/org/dashboard");
   };
 
   return (
@@ -33,7 +41,6 @@ export default function AdminLoginPage() {
           border: "1.5px solid #e8ddd0",
         }}
       >
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-3">
             <Leaf size={24} style={{ color: "#4a7c59" }} />
@@ -47,10 +54,7 @@ export default function AdminLoginPage() {
           </p>
         </div>
 
-        {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-
-          {/* Email */}
           <div>
             <label
               className="block mb-1 text-sm"
@@ -65,7 +69,6 @@ export default function AdminLoginPage() {
                 className="absolute left-3 top-1/2 -translate-y-1/2"
                 style={{ color: "#a08878" }}
               />
-
               <input
                 type="email"
                 placeholder="organization@email.com"
@@ -81,7 +84,6 @@ export default function AdminLoginPage() {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label
               className="block mb-1 text-sm"
@@ -96,7 +98,6 @@ export default function AdminLoginPage() {
                 className="absolute left-3 top-1/2 -translate-y-1/2"
                 style={{ color: "#a08878" }}
               />
-
               <input
                 type="password"
                 placeholder="Enter your password"
@@ -112,7 +113,6 @@ export default function AdminLoginPage() {
             </div>
           </div>
 
-          {/* Remember / forgot */}
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center gap-2" style={{ color: "#7c5a3e" }}>
               <input type="checkbox" />
@@ -124,7 +124,6 @@ export default function AdminLoginPage() {
             </button>
           </div>
 
-          {/* Login button */}
           <button
             type="submit"
             className="w-full rounded-xl py-3 transition-all"
@@ -138,7 +137,6 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        {/* Signup */}
         <div className="mt-6 text-center text-sm" style={{ color: "#7c5a3e" }}>
           Don’t have an organization account?{" "}
           <button
@@ -149,8 +147,7 @@ export default function AdminLoginPage() {
           </button>
         </div>
 
-        {/* Back to volunteer login */}
-      <div className="mt-3 text-center text-sm" style={{ color: "#7c5a3e" }}>
+        <div className="mt-3 text-center text-sm" style={{ color: "#7c5a3e" }}>
           Volunteer{" "}
           <button
             onClick={() => navigate("/")}
