@@ -14,7 +14,7 @@ const URGENCIES: { value: Urgency; label: string; desc: string }[] = [
 const TIME_COMMITMENTS: TimeCommitment[] = ["1-2 hours", "Half day", "Full day", "Weekly", "Ongoing"];
 const STATES = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
 
-export function EditPosition() {
+export default function EditPosition() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { getPosition, updatePosition } = useApp();
