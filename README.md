@@ -37,7 +37,6 @@ Then place it in the following folder:
 backend/src/main/resources/
 
 So the full path should be: backend/src/main/resources/serviceAccountKey.json
-backend/src/main/resources/serviceAccountKey.json
 This step is required for the backend to connect to Firebase.
 
 ## 4. Run the Backend
@@ -79,5 +78,44 @@ The backend uses port 8080.
 The frontend uses port 5173.
 
 If either port is already in use, please stop the other process using it.
+
+##8. Quick Start Summary
+Terminal 1
+
+cd backend
+.\mvnw.cmd spring-boot:run
+
+Terminal 2
+
+npm install
+npm run dev
+
+Browser
+
+Open:
+
+http://localhost:5173
+
+##9. Troubleshooting
+Backend does not start
+
+Make sure Java is installed correctly
+
+Make sure serviceAccountKey.json is in:
+backend/src/main/resources/
+
+Frontend does not load backend data
+
+Make sure the backend is running on http://localhost:8080
+
+Make sure the frontend is running on http://localhost:5173
+
+Port already in use
+
+If port 8080 or 5173 is already being used, stop the other process using that port and try again.
+
+Stop the application
+
+Press Ctrl + C in each terminal window.
 
 Thank you for taking the time to review our project.
