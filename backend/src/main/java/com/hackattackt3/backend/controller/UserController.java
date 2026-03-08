@@ -1,35 +1,59 @@
 package com.hackattackt3.backend.controller;
 
+import com.hackattackt3.backend.model.Application;
+import com.hackattackt3.backend.model.SavedPosition;
+import com.hackattackt3.backend.service.ApplicationService;
+import com.hackattackt3.backend.service.PositionService;
+import com.hackattackt3.backend.service.SavedPositionService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.hackattackt3.backend.service.UserService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private final SavedPositionService savedPositionService;
+    private final PositionService positionService;
+    private final ApplicationService applicationService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(SavedPositionService savedPositionService,
+                          PositionService positionService,
+                          ApplicationService applicationService) {
+        this.savedPositionService = savedPositionService;
+        this.positionService = positionService;
+        this.applicationService = applicationService;
     }
 
-    // Volunteer only - save a position
     @PostMapping("/{id}/save/{positionId}")
-    public void savePosition(
-        @RequestHeader("Role") String role,
+    public ResponseEntity<SavedPosition> savePosition(
         @PathVariable String id,
         @PathVariable String positionId
-    ) throws Exception{
-        if (!role.equals("VOLUNTEER")) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
+    ) throws Exception {
+
+        if (positionService.getPositionById(positionId) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Position not found");
         }
-        userService.savePosition(id, positionId);
+
+        if (savedPositionService.isAlreadySaved(id, positionId)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                "You have already saved this position");
+        }
+
+        SavedPosition saved = savedPositionService.savePosition(id, positionId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @GetMapping("/{id}/saved")
+    public List<SavedPosition> getSavedPositions(@PathVariable String id) throws Exception {
+        return savedPositionService.getSavedPositionsByUserId(id);
+    }
+
+    @GetMapping("/{id}/applied")
+    public List<Application> getAppliedPositions(@PathVariable String id) throws Exception {
+        return applicationService.getApplicationsByUserId(id);
     }
 }
