@@ -219,6 +219,7 @@ export default function AdminSignupPage() {
           <button
             type="submit"
             className="w-full rounded-xl py-3 transition-all"
+            onClick={() => navigate("/org/dashboard")}
             style={{
               backgroundColor: "#4a7c59",
               color: "#d4e8d8",

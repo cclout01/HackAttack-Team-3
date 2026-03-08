@@ -23,7 +23,7 @@ const DEFAULT_IMAGES = [
   "https://images.unsplash.com/photo-1770914755925-6468b9050176?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080",
 ];
 
-export function PostPosition() {
+export default function PostPosition() {
   const { currentOrg, postPosition } = useApp();
   const navigate = useNavigate();
 
