@@ -7,6 +7,7 @@ export default function VolunteerLoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showOrgOptions, setShowOrgOptions] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,25 +136,42 @@ export default function VolunteerLoginPage() {
           </button>
         </form>
 
-        {/* Organizer links */}
-        <div className="mt-6 text-center text-sm" style={{ color: "#7c5a3e" }}>
-          Are you an organization?{" "}
+        {/* Organizer entry */}
+        <div className="mt-6 text-center">
           <button
-            onClick={() => navigate("/org-login")}
-            style={{ color: "#4a7c59", fontWeight: 700 }}
+            type="button"
+            onClick={() => setShowOrgOptions((prev) => !prev)}
+            className="w-full rounded-xl py-2.5 transition-all"
+            style={{
+              backgroundColor: "#f0ede8",
+              color: "#4a2f1a",
+              fontWeight: 700,
+              border: "1.5px solid #e8ddd0",
+            }}
           >
-            Organizer Login
+            Organization Account
           </button>
-        </div>
 
-        <div className="mt-3 text-center text-sm" style={{ color: "#7c5a3e" }}>
-          Need an organization account?{" "}
-          <button
-            onClick={() => navigate("/org-signup")}
-            style={{ color: "#4a7c59", fontWeight: 700 }}
-          >
-            Organizer Sign Up
-          </button>
+          {showOrgOptions && (
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => navigate("/org-login")}
+                className="px-4 py-2 rounded-xl text-sm"
+                style={{ backgroundColor: "#4a7c59", color: "#d4e8d8", fontWeight: 700 }}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate("/org-signup")}
+                className="px-4 py-2 rounded-xl text-sm"
+                style={{ backgroundColor: "#f0ede8", color: "#7c5a3e", fontWeight: 700 }}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Volunteer Signup */}
