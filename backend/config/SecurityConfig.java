@@ -1,5 +1,5 @@
 package com.hackattackt3.backend.config;
-
+//created security config to allow unauthenticated access to GET /positions and GET /positions/{id} endpoints, while requiring authentication for all other endpoints. Also configured OAuth2 login with Google and set up logout functionality.
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
