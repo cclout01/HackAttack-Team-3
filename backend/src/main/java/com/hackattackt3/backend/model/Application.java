@@ -1,18 +1,16 @@
 package com.hackattackt3.backend.model;
 
-import java.time.LocalDateTime;
-
 public class Application {
     private String id;
     private String userId;
     private String positionId;
-    private LocalDateTime appliedAt;
+    private String appliedAt;
     private ApplicationStatus status;
 
     public Application() {
     }
 
-    public Application(String id, String userId, String positionId, LocalDateTime appliedAt, ApplicationStatus status) {
+    public Application(String id, String userId, String positionId, String appliedAt, ApplicationStatus status) {
         this.id = id;
         this.userId = userId;
         this.positionId = positionId;
@@ -44,11 +42,11 @@ public class Application {
         this.positionId = positionId;
     }
 
-    public LocalDateTime getAppliedAt() {
+    public String getAppliedAt() {
         return appliedAt;
     }
 
-    public void setAppliedAt(LocalDateTime appliedAt) {
+    public void setAppliedAt(String appliedAt) {
         this.appliedAt = appliedAt;
     }
 

@@ -18,7 +18,7 @@ public class ApplicationService {
         }
 
         if (application.getAppliedAt() == null) {
-            application.setAppliedAt(LocalDateTime.now());
+            application.setAppliedAt(LocalDateTime.now().toString());
         }
 
         if (application.getStatus() == null) {
