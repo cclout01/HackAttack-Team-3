@@ -1,5 +1,6 @@
 package com.hackattackt3.backend.controller;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.hackattackt3.backend.service.AdminService;
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

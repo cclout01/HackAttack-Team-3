@@ -13,7 +13,7 @@ export default function LoginPage() {
   }, [location.state]);
 
   if (isAuthenticated && auth) {
-    if (auth.role === "ORG") return <Navigate to="/dashboard/org" replace />;
+    if (auth.role === "ORG") return <Navigate to="/org/dashboard" replace />;
     if (auth.role === "ADMIN") return <Navigate to="/admin" replace />;
     return <Navigate to={redirectTarget} replace />;
   }

@@ -2,6 +2,7 @@ package com.hackattackt3.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.stereotype.Service;
@@ -33,7 +34,10 @@ public class PositionService {
     // BE-5: create a new position
     public VolunteeringPost createPosition(VolunteeringPost post) throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
-        db.collection(COLLECTION).document().set(post).get();
+        if (post.getId() == null || post.getId().isEmpty()) {
+            post.setId(UUID.randomUUID().toString());
+        }
+        db.collection(COLLECTION).document(post.getId()).set(post).get();
         return post;
     }
 

@@ -13,6 +13,18 @@ import type {
   Position,
   Volunteer,
 } from "../data/mockData";
+import {
+  applyToPosition,
+  confirmPosition,
+  createApplication,
+  createPosition,
+  getApplicants,
+  getAppliedPositions as getAppliedPositionsApi,
+  getPositionById,
+  getSavedPositions as getSavedPositionsApi,
+  resetPassword,
+  type BackendPosition,
+} from "../lib/api";
 
 type UserMode = "volunteer" | "organization";
 export type AuthRole = "VOLUNTEER" | "ORG" | "ADMIN";
@@ -86,7 +98,6 @@ interface AppContextType {
   clearLatestCompletionForVolunteer: (volunteerId: string) => void;
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080";
 const AppContext = createContext<AppContextType | null>(null);
 
 function normalizeRole(role: string | null | undefined): AuthRole {
@@ -94,6 +105,36 @@ function normalizeRole(role: string | null | undefined): AuthRole {
   if (raw === "ADMIN") return "ADMIN";
   if (raw === "ORG" || raw === "ORGANIZATION") return "ORG";
   return "VOLUNTEER";
+}
+
+function toUiPosition(post: BackendPosition): Position {
+  const id = post.id ?? `pos-${Date.now()}`;
+  const month = post.startMonth
+    ? new Date(`${post.startMonth}-01`).toLocaleString("en-US", { month: "long" })
+    : "January";
+
+  return {
+    id,
+    orgId: post.organizationId ?? "org-1",
+    title: post.title ?? "Untitled Position",
+    description: post.description ?? "",
+    requirements: "",
+    skills: post.skills ?? [],
+    location: post.country ?? "",
+    city: post.country ?? "",
+    state: post.stateOrProvince ?? "",
+    date: post.expiryDate ?? new Date().toISOString().split("T")[0],
+    month,
+    timeCommitment: "Half day",
+    urgency: (post.urgency as Position["urgency"]) ?? "medium",
+    category: "Community",
+    spotsTotal: post.volunteerCount ?? 0,
+    spotsAvailable: post.volunteerCount ?? 0,
+    image: "",
+    signedUpVolunteers: post.applicants ?? [],
+    confirmedCompletions: [],
+    status: String(post.status ?? "OPEN").toUpperCase() === "CLOSED" ? "filled" : "open",
+  };
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -128,27 +169,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const currentOrg = organizations.find((o) => o.id === currentOrgId) ?? organizations[0];
   const isAuthenticated = Boolean(auth?.token);
 
-  async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
-    if (!auth?.token) throw new Error("Missing auth token");
-    const response = await fetch(`${API_BASE}${path}`, {
-      ...init,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${auth.token}`,
-        Role: auth.role,
-        ...(init?.headers ?? {}),
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`Request failed (${response.status})`);
-    }
-    if (response.status === 204) {
-      return undefined as T;
-    }
-    const text = await response.text();
-    return (text ? JSON.parse(text) : undefined) as T;
-  }
-
   const loginWithAuth = (authState: AuthState) => {
     const role = normalizeRole(authState.role);
     const next = { ...authState, role };
@@ -160,6 +180,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const logout = () => setAuth(null);
 
   const signUpForPosition = (positionId: string) => {
+    void createApplication(
+      {
+        userId: auth?.userId ?? currentVolunteerId,
+        positionId,
+      },
+      auth?.token
+    ).catch(() => {
+      // Keep local UX responsive even if backend is unavailable.
+    });
+
+    void applyToPosition(positionId, auth?.token).catch(() => {
+      // Fallback: application record still tracks signup state.
+    });
+
     setPositions((prev) =>
       prev.map((p) => {
         if (p.id === positionId && !p.signedUpVolunteers.includes(currentVolunteerId)) {
@@ -255,10 +289,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     note: string
   ) => {
     try {
-      await apiFetch<void>(`/positions/${positionId}/confirm`, {
-        method: "POST",
-        body: JSON.stringify({ volunteerId, hours, note }),
-      });
+      await confirmPosition(positionId, auth?.token);
     } catch {
       // Fallback to local state when backend is unavailable/incomplete.
     }
@@ -329,8 +360,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const getSavedPositions = async (userId: string) => {
     try {
-      const payload = await apiFetch<Position[] | { positions: Position[] }>(`/users/${userId}/saved`);
-      return Array.isArray(payload) ? payload : payload.positions ?? [];
+      const saved = await getSavedPositionsApi(userId, auth?.token);
+      const hydrated = await Promise.all(
+        saved.map(async (item) => {
+          const post = await getPositionById(item.positionId, auth?.token);
+          return toUiPosition(post);
+        })
+      );
+      return hydrated;
     } catch {
       const ids = savedByVolunteer[userId] ?? [];
       return ids.map((id) => positions.find((p) => p.id === id)).filter(Boolean) as Position[];
@@ -339,10 +376,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const getAppliedPositions = async (userId: string) => {
     try {
-      const payload = await apiFetch<
-        AppliedPosition[] | { applications: AppliedPosition[] }
-      >(`/users/${userId}/applied`);
-      return Array.isArray(payload) ? payload : payload.applications ?? [];
+      const apps = await getAppliedPositionsApi(userId, auth?.token);
+      const hydrated = await Promise.all(
+        apps.map(async (application) => {
+          const post = await getPositionById(application.positionId, auth?.token);
+          return {
+            positionId: application.positionId,
+            title: post.title ?? "Untitled Position",
+            status: application.status ?? "PENDING",
+          } as AppliedPosition;
+        })
+      );
+      return hydrated;
     } catch {
       return (appliedByVolunteer[userId] ?? [])
         .map((entry) => {
@@ -360,12 +405,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const getApplicantsForPosition = async (positionId: string) => {
     try {
-      const payload = await apiFetch<
-        Array<{ id: string; name?: string; email?: string }> | { applicants: Array<{ id: string }> }
-      >(`/positions/${positionId}/applicants`);
-      const applicantIds = (Array.isArray(payload) ? payload : payload.applicants ?? []).map(
-        (item) => item.id
-      );
+      const applicantIds = await getApplicants(positionId, auth?.token);
       return applicantIds
         .map((id) => volunteers.find((v) => v.id === id))
         .filter(Boolean) as Volunteer[];
@@ -380,55 +420,41 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const createPositionFromForm = async (payload: Record<string, unknown>) => {
     try {
-      await apiFetch("/positions", {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
+      await createPosition(payload, auth?.token);
     } catch {
       // The form route already writes to local state via postPosition.
     }
   };
 
   const getAllUsersForAdmin = async (): Promise<AdminUser[]> => {
-    try {
-      const payload = await apiFetch<any>("/admin/users");
-      const list: Array<{ id: string; name?: string; email?: string; role?: string }> =
-        Array.isArray(payload) ? payload : payload?.users ?? [];
+    const volunteerUsers: AdminUser[] = volunteers.map((volunteer) => ({
+      id: volunteer.id,
+      name: volunteer.name,
+      email: volunteer.email,
+      role: "VOLUNTEER",
+    }));
+    const orgUsers: AdminUser[] = organizations.map((org) => ({
+      id: org.id,
+      name: org.name,
+      email: `${org.id}@org.example`,
+      role: "ORG",
+    }));
+    const adminUser: AdminUser = {
+      id: "admin-1",
+      name: "Platform Admin",
+      email: "admin@rootedgood.org",
+      role: "ADMIN",
+    };
 
-      return list.map((u) => ({
-        id: u.id,
-        name: u.name ?? "",
-        email: u.email ?? "",
-        role: normalizeRole(u.role) as AuthRole,
-      }));
-    } catch {
-      const volunteerUsers: AdminUser[] = volunteers.map((volunteer) => ({
-        id: volunteer.id,
-        name: volunteer.name,
-        email: volunteer.email,
-        role: "VOLUNTEER",
-      }));
-      const orgUsers: AdminUser[] = organizations.map((org) => ({
-        id: org.id,
-        name: org.name,
-        email: `${org.id}@org.example`,
-        role: "ORG",
-      }));
-      return [
-        ...volunteerUsers,
-        ...orgUsers,
-        {
-          id: "admin-1",
-          name: "Platform Admin",
-          email: "admin@rootedgood.org",
-          role: "ADMIN",
-        },
-      ];
-    }
+    return [
+      ...volunteerUsers,
+      ...orgUsers,
+      adminUser,
+    ];
   };
 
   const resetPasswordForUser = async (userId: string) => {
-    await apiFetch<void>(`/admin/users/${userId}/reset-password`, { method: "POST" });
+    await resetPassword(userId, auth?.token);
   };
 
   const clearLatestCompletionForVolunteer = (volunteerId: string) => {
