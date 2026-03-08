@@ -6,3 +6,4 @@
 /.react-router/
 /build/
 backend/src/main/resources/serviceAccountKey.json
+backend/src/main/resources/serviceAccountKey.json

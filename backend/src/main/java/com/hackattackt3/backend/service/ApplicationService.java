@@ -1,5 +1,7 @@
 package com.hackattackt3.backend.service;
 
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import com.hackattackt3.backend.model.Application;
 import com.hackattackt3.backend.model.ApplicationStatus;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,15 @@ public class ApplicationService {
             application.setStatus(ApplicationStatus.PENDING);
         }
 
-        // Firebase logic goes here later
+        try {
+            Firestore db = FirestoreClient.getFirestore();
+            db.collection("applications")
+              .document(application.getId())
+              .set(application);
 
-        return application;
+            return application;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save application", e);
+        }
     }
 }
