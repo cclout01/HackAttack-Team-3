@@ -77,6 +77,14 @@ export default function OrgDashboard() {
               <PlusCircle size={16} />
               Post New Position
             </Link>
+             <Link
+              to="/logoutPage"
+              className="flex items-center gap-2 px-5 py-3 rounded-2xl text-sm transition-all hover:opacity-90"
+              onClick={() => navigate("/logoutPage")}
+              style={{ backgroundColor: "#4a7c59", color: "#d4e8d8", fontWeight: 600 }}
+            >
+              Logout
+            </Link>
           </div>
 
           {/* Stats */}
