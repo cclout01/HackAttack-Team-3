@@ -192,6 +192,7 @@ export default function VolunteerSignupPage() {
           <button
             type="submit"
             className="w-full rounded-xl py-3 transition-all"
+            onClick={() => navigate("/home")}
             style={{
               backgroundColor: "#4a7c59",
               color: "#d4e8d8",
