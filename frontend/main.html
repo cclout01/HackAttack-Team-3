@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Volunteer Board</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#f5f3ef;
+color:#333;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:#1e4d2b;
+color:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 60px;
+}
+
+.logo{
+font-weight:bold;
+font-size:20px;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-size:14px;
+}
+
+.nav-links a:hover{
+opacity:0.7;
+}
+
+/* HERO */
+
+.hero{
+background:linear-gradient(135deg,#2f7a47,#6faa84);
+padding:80px 20px;
+text-align:center;
+color:white;
+}
+
+.hero h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.hero p{
+margin-bottom:25px;
+}
+
+.search input{
+width:420px;
+padding:14px;
+border:none;
+border-radius:30px;
+}
+
+/* STATS */
+
+.stats{
+display:flex;
+justify-content:center;
+gap:80px;
+background:white;
+padding:30px;
+box-shadow:0 3px 8px rgba(0,0,0,0.08);
+}
+
+.stat{
+text-align:center;
+}
+
+.stat h2{
+color:#2f7a47;
+}
+
+/* MAIN LAYOUT */
+
+.container{
+display:flex;
+padding:40px 60px;
+gap:40px;
+}
+
+/* FILTERS */
+
+.filters{
+width:250px;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.filters h3{
+margin-bottom:15px;
+}
+
+.filter-group{
+margin-bottom:20px;
+}
+
+.filter-group strong{
+display:block;
+margin-bottom:8px;
+}
+
+.filter-group button{
+background:#e7efe9;
+border:none;
+border-radius:20px;
+padding:6px 12px;
+margin:4px;
+cursor:pointer;
+font-size:12px;
+}
+
+.filter-group button:hover{
+background:#2f7a47;
+color:white;
+}
+
+/* GRID */
+
+.grid{
+flex:1;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+gap:25px;
+}
+
+/* CARDS */
+
+.card{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+transition:0.2s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.card-body{
+padding:15px;
+}
+
+.badge{
+display:inline-block;
+padding:4px 8px;
+font-size:11px;
+border-radius:8px;
+background:#ffe8a3;
+margin-bottom:8px;
+}
+
+.card-title{
+font-weight:bold;
+margin-bottom:6px;
+}
+
+.card-location{
+font-size:13px;
+color:#777;
+margin-bottom:10px;
+}
+
+/* progress */
+
+.progress{
+height:6px;
+background:#eee;
+border-radius:6px;
+margin-bottom:12px;
+}
+
+.progress-bar{
+height:100%;
+background:#2f7a47;
+width:60%;
+border-radius:6px;
+}
+
+/* button */
+
+.card button{
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#2f7a47;
+color:white;
+cursor:pointer;
+}
+
+.card button:hover{
+background:#245f38;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:60px;
+background:#1e4d2b;
+color:white;
+padding:40px 60px;
+display:flex;
+justify-content:space-between;
+}
+
+.footer h4{
+margin-bottom:10px;
+}
+
+.footer p{
+font-size:14px;
+opacity:0.8;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">RootedGood</div>
+
+<div class="nav-links">
+<a href="#">Browse</a>
+<a href="#">Volunteer</a>
+<a href="#">Organizations</a>
+<a href="#">Profile</a>
+</div>
+
+</div>
+
+
+<!-- HERO -->
+
+<div class="hero">
+
+<h1>Find Your Purpose,<br>Give Your Time.</h1>
+
+<p>Connect with organizations and make a real impact.</p>
+
+<div class="search">
+<input placeholder="Search opportunities, cities, or causes">
+</div>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<h2>120+</h2>
+<p>Organizations</p>
+</div>
+
+<div class="stat">
+<h2>540</h2>
+<p>Open Opportunities</p>
+</div>
+
+<div class="stat">
+<h2>12k</h2>
+<p>Volunteers</p>
+</div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+<!-- FILTERS -->
+
+<div class="filters">
+
+<h3>Filter Positions</h3>
+
+<div class="filter-group">
+<strong>Category</strong>
+<button>Environment</button>
+<button>Community</button>
+<button>Education</button>
+</div>
+
+<div class="filter-group">
+<strong>Location</strong>
+<button>Portland</button>
+<button>Seattle</button>
+<button>Austin</button>
+</div>
+
+<div class="filter-group">
+<strong>Urgency</strong>
+<button>High</button>
+<button>Medium</button>
+<button>Open</button>
+</div>
+
+</div>
+
+
+<!-- CARDS -->
+
+<div class="grid">
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a">
+
+<div class="card-body">
+
+<div class="badge">High Need</div>
+
+<div class="card-title">Animal Shelter Dog Walker</div>
+
+<div class="card-location">Austin, TX</div>
+
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+
+<button>Apply</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1469571486292-b53601020f8b">
+
+<div class="card-body">
+
+<div class="badge">Community</div>
+
+<div class="card-title">Food Pantry Volunteer</div>
+
+<div class="card-location">Seattle, WA</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:40%"></div>
+</div>
+
+<button>Apply</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+
+<div class="card-body">
+
+<div class="badge">Education</div>
+
+<div class="card-title">After School Math Tutor</div>
+
+<div class="card-location">Portland, OR</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:75%"></div>
+</div>
+
+<button>Apply</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+
+<div class="card-body">
+
+<div class="badge">Environment</div>
+
+<div class="card-title">Urban Tree Planting</div>
+
+<div class="card-location">Portland, OR</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:55%"></div>
+</div>
+
+<button>Apply</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<div>
+<h4>RootedGood</h4>
+<p>Connecting volunteers with organizations worldwide.</p>
+</div>
+
+<div>
+<h4>Links</h4>
+<p>Browse Opportunities</p>
+<p>Organizations</p>
+<p>About</p>
+</div>
+
+<div>
+<h4>Contact</h4>
+<p>support@rootedgood.org</p>
+</div>
+
+</div>
+
+</body>
+</html>
