@@ -6,7 +6,7 @@ import type { Position } from "app/data/mockData";
 import { useNavigate } from "react-router";
 
 const CATEGORIES = ["All", "Environment", "Food Security", "Animal Welfare", "Education", "Community", "Healthcare", "Arts & Culture"];
-const LOCATIONS = ["All", "Portland, OR", "Austin, TX", "Seattle, WA", "Chicago, IL", "Denver, CO"];
+const LOCATIONS = ["All", "Kelowna, BC", "Calgary, AB", "Airdrie, AB", "Vancouver, BC", "Quebec City, QC", "Halifax, NS", "Winnipeg, MB", "Ottawa, ON", "Victoria, BC"];
 const URGENCIES = ["All", "critical", "high", "medium", "low"];
 const MONTHS = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const TIME_COMMITMENTS = ["All", "1-2 hours", "Half day", "Full day", "Weekly", "Ongoing"];
