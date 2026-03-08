@@ -26,7 +26,7 @@ public class UserController {
         @RequestHeader("Role") String role,
         @PathVariable String id,
         @PathVariable String positionId
-    ) {
+    ) throws Exception{
         if (!role.equals("VOLUNTEER")) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
