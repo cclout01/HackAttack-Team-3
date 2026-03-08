@@ -2,264 +2,442 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Volunteer Board</title>
+<title>RootedGood Volunteer Board</title>
+
 <style>
 
+:root{
+--green:#2f7a47;
+--darkgreen:#1e4d2b;
+--blue:#3498db;
+--purple:#9b59b6;
+--orange:#f39c12;
+--red:#e74c3c;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: Arial, Helvetica, sans-serif;
+}
+
 body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:#f5f3ef;
+background:linear-gradient(#f5f3ef,#eef4ef);
 }
 
 /* NAVBAR */
 
 .navbar{
-    background:#1f4f2f;
-    padding:12px 40px;
-    color:white;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+background:var(--darkgreen);
+color:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 60px;
+}
+
+.logo{
+font-weight:bold;
+font-size:20px;
 }
 
 .nav-links a{
-    color:white;
-    margin-left:20px;
-    text-decoration:none;
+color:white;
+text-decoration:none;
+margin-left:20px;
 }
 
 /* HERO */
 
 .hero{
-    background:linear-gradient(135deg,#2f7a47,#5e9c6c);
-    color:white;
-    text-align:center;
-    padding:60px 20px;
+background:
+linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c");
+background-size:cover;
+background-position:center;
+padding:120px 20px;
+text-align:center;
+color:white;
 }
 
 .hero h1{
-    font-size:36px;
-    margin-bottom:10px;
-}
-
-.search{
-    margin-top:20px;
+font-size:42px;
+margin-bottom:10px;
 }
 
 .search input{
-    width:400px;
-    padding:12px;
-    border-radius:25px;
-    border:none;
+width:420px;
+padding:14px;
+border:none;
+border-radius:30px;
 }
 
-/* LAYOUT */
+/* STATS */
+
+.stats{
+display:flex;
+justify-content:center;
+gap:80px;
+background:white;
+padding:30px;
+box-shadow:0 3px 8px rgba(0,0,0,0.08);
+}
+
+.stat{
+text-align:center;
+}
+
+.stat h2{
+color:var(--green);
+}
+
+/* MAIN */
 
 .container{
-    display:flex;
-    padding:40px;
-    gap:30px;
+display:flex;
+padding:40px 60px;
+gap:40px;
 }
 
 /* FILTERS */
 
 .filters{
-    width:240px;
-    background:white;
-    padding:20px;
-    border-radius:10px;
-}
-
-.filters h3{
-    margin-bottom:15px;
+width:250px;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
 .filter-group{
-    margin-bottom:20px;
+margin-bottom:20px;
 }
 
 .filter-group button{
-    padding:6px 12px;
-    margin:4px;
-    border-radius:20px;
-    border:none;
-    background:#e7efe9;
-    cursor:pointer;
+background:#e7efe9;
+border:none;
+border-radius:20px;
+padding:6px 12px;
+margin:4px;
+cursor:pointer;
 }
 
-/* CARD GRID */
+/* GRID */
 
 .grid{
-    flex:1;
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:20px;
+flex:1;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+gap:25px;
 }
 
-/* CARDS */
+/* CARD */
 
 .card{
-    background:white;
-    border-radius:10px;
-    overflow:hidden;
-    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
 }
 
 .card img{
-    width:100%;
-    height:150px;
-    object-fit:cover;
+width:100%;
+height:170px;
+object-fit:cover;
 }
 
 .card-body{
-    padding:15px;
+padding:15px;
 }
 
-.card-title{
-    font-size:18px;
-    font-weight:bold;
+/* BADGES */
+
+.badge{
+padding:5px 10px;
+border-radius:20px;
+color:white;
+font-size:11px;
+display:inline-block;
+margin-bottom:8px;
 }
+
+.environment{background:#27ae60;}
+.community{background:#3498db;}
+.education{background:#9b59b6;}
+
+/* LOCATION */
 
 .card-location{
-    color:#777;
-    font-size:14px;
+font-size:13px;
+color:#777;
+margin-bottom:10px;
 }
 
+/* PROGRESS */
+
 .progress{
-    height:6px;
-    background:#eee;
-    margin-top:10px;
-    border-radius:4px;
+height:6px;
+background:#eee;
+border-radius:6px;
+margin-bottom:12px;
 }
 
 .progress-bar{
-    height:100%;
-    width:60%;
-    background:#2f7a47;
-    border-radius:4px;
+height:100%;
+background:var(--green);
+border-radius:6px;
+transition:1s;
+}
+
+/* BUTTONS */
+
+.card-buttons{
+display:flex;
+gap:10px;
+}
+
+.apply{
+flex:1;
+padding:8px;
+border:none;
+background:linear-gradient(135deg,#2f7a47,#4fa36b);
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
+.save{
+padding:8px;
+border:none;
+background:#ffe6e6;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* MODAL */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+}
+
+.modal-content{
+background:white;
+width:400px;
+margin:150px auto;
+padding:25px;
+border-radius:10px;
+}
+
+.close{
+cursor:pointer;
+float:right;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:60px;
+background:var(--darkgreen);
+color:white;
+padding:40px 60px;
+display:flex;
+justify-content:space-between;
 }
 
 </style>
 </head>
 
-
 <body>
 
-
 <div class="navbar">
-    <div><b>RootedGood</b></div>
-    <div class="nav-links">
-        <a href="#">Browse</a>
-        <a href="#">Volunteer</a>
-        <a href="#">Organization</a>
-        <a href="#">Profile</a>
-    </div>
+<div class="logo">RootedGood</div>
+<div class="nav-links">
+<a href="#">Browse</a>
+<a href="#">Volunteer</a>
+<a href="#">Organizations</a>
+<a href="#">Profile</a>
 </div>
-
+</div>
 
 <div class="hero">
-    <h1>Find Your Purpose,<br>Give Your Time.</h1>
-    <p>Connect with local organizations making a difference.</p>
-
-    <div class="search">
-        <input type="text" placeholder="Search by role, organization, or cause...">
-    </div>
+<h1>Find Your Purpose,<br>Give Your Time</h1>
+<div class="search">
+<input id="searchInput" placeholder="Search volunteer opportunities">
+</div>
 </div>
 
-
+<div class="stats">
+<div class="stat"><h2>120+</h2><p>Organizations</p></div>
+<div class="stat"><h2>540</h2><p>Open Opportunities</p></div>
+<div class="stat"><h2>12k</h2><p>Volunteers</p></div>
+</div>
 
 <div class="container">
 
-
 <div class="filters">
 
-<h3>Filter Positions</h3>
+<h3>Filter</h3>
 
 <div class="filter-group">
-<strong>Category</strong><br>
-<button>Environment</button>
-<button>Community</button>
-<button>Education</button>
-</div>
-
-<div class="filter-group">
-<strong>Location</strong><br>
-<button>Portland</button>
-<button>Seattle</button>
-<button>Austin</button>
-</div>
-
-<div class="filter-group">
-<strong>Urgency</strong><br>
-<button>High</button>
-<button>Medium</button>
-<button>Open</button>
+<button onclick="filterCategory('environment')">Environment</button>
+<button onclick="filterCategory('community')">Community</button>
+<button onclick="filterCategory('education')">Education</button>
+<button onclick="filterCategory('all')">All</button>
 </div>
 
 </div>
 
+<div class="grid" id="grid">
 
-<div class="grid">
-
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a">
+<div class="card" data-category="community">
+<img src="https://images.unsplash.com/photo-1593113630400-ea4288922497">
 <div class="card-body">
-<div class="card-title">Animal Shelter Dog Walker</div>
+<div class="badge community">Community</div>
+<h3>Animal Shelter Dog Walker</h3>
 <div class="card-location">Austin, TX</div>
-
-<div class="progress">
-<div class="progress-bar"></div>
+<div class="progress"><div class="progress-bar" style="width:60%"></div></div>
+<div class="card-buttons">
+<button class="apply details">Details</button>
+<button class="save">♡</button>
+</div>
+</div>
 </div>
 
-</div>
-</div>
-
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1469571486292-b53601020f8b">
+<div class="card" data-category="community">
+<img src="https://images.unsplash.com/photo-1544025162-d76694265947">
 <div class="card-body">
-<div class="card-title">Food Pantry Volunteer</div>
+<div class="badge community">Community</div>
+<h3>Food Pantry Volunteer</h3>
 <div class="card-location">Seattle, WA</div>
-
-<div class="progress">
-<div class="progress-bar" style="width:40%"></div>
+<div class="progress"><div class="progress-bar" style="width:40%"></div></div>
+<div class="card-buttons">
+<button class="apply details">Details</button>
+<button class="save">♡</button>
+</div>
+</div>
 </div>
 
-</div>
-</div>
-
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+<div class="card" data-category="education">
+<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
 <div class="card-body">
-<div class="card-title">After School Math Tutor</div>
+<div class="badge education">Education</div>
+<h3>After School Math Tutor</h3>
 <div class="card-location">Portland, OR</div>
-
-<div class="progress">
-<div class="progress-bar" style="width:75%"></div>
+<div class="progress"><div class="progress-bar" style="width:75%"></div></div>
+<div class="card-buttons">
+<button class="apply details">Details</button>
+<button class="save">♡</button>
+</div>
+</div>
 </div>
 
-</div>
-</div>
-
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+<div class="card" data-category="environment">
+<img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d">
 <div class="card-body">
-<div class="card-title">Tree Planting Brigade</div>
+<div class="badge environment">Environment</div>
+<h3>Urban Tree Planting</h3>
 <div class="card-location">Portland, OR</div>
-
-<div class="progress">
-<div class="progress-bar" style="width:55%"></div>
+<div class="progress"><div class="progress-bar" style="width:55%"></div></div>
+<div class="card-buttons">
+<button class="apply details">Details</button>
+<button class="save">♡</button>
+</div>
+</div>
 </div>
 
 </div>
 </div>
 
+<div class="footer">
+<div>
+<h4>RootedGood</h4>
+<p>Connecting volunteers with organizations worldwide.</p>
+</div>
+<div>
+<h4>Links</h4>
+<p>Browse Opportunities</p>
+<p>Organizations</p>
+<p>About</p>
+</div>
+</div>
 
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="close" id="closeModal">X</span>
+<h2 id="modalTitle"></h2>
+<p>This volunteer opportunity helps communities and supports important causes.</p>
+<button class="apply">Apply Now</button>
 </div>
 </div>
+
+<script>
+
+/* SEARCH */
+
+document.getElementById("searchInput").addEventListener("keyup",function(){
+let value=this.value.toLowerCase();
+document.querySelectorAll(".card").forEach(card=>{
+card.style.display=card.innerText.toLowerCase().includes(value)?"block":"none";
+});
+});
+
+/* FILTER */
+
+function filterCategory(category){
+document.querySelectorAll(".card").forEach(card=>{
+if(category==="all"||card.dataset.category===category){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+});
+}
+
+/* SAVE */
+
+document.querySelectorAll(".save").forEach(btn=>{
+btn.onclick=function(){
+this.innerText=this.innerText==="♡"?"♥":"♡";
+};
+});
+
+/* MODAL */
+
+const modal=document.getElementById("modal");
+const modalTitle=document.getElementById("modalTitle");
+
+document.querySelectorAll(".details").forEach(btn=>{
+btn.onclick=function(){
+let title=this.closest(".card").querySelector("h3").innerText;
+modalTitle.innerText=title;
+modal.style.display="block";
+};
+});
+
+document.getElementById("closeModal").onclick=()=>modal.style.display="none";
+
+/* PROGRESS ANIMATION */
+
+document.querySelectorAll(".progress-bar").forEach(bar=>{
+let width=bar.style.width;
+bar.style.width="0";
+setTimeout(()=>{bar.style.width=width},300);
+});
+
+</script>
 
 </body>
 </html>
