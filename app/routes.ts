@@ -4,6 +4,8 @@ export default [
   index("routes/volunteerlogin.tsx"),
   route("home", "routes/home.tsx"),
   route("admin-login", "routes/admin-login.tsx"),
+  route("admin-signup", "routes/admin-signup.tsx"),
+  route("volunteersignup", "routes/volunteersignup.tsx"),
   route("position/:id", "routes/PositonDetail.tsx"),
   route("org/dashboard", "routes/OrgDashboard.tsx"),
   route("org/post", "routes/postposition.tsx"),

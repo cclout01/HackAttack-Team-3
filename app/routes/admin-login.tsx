@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Building2, Mail, Lock, Leaf } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -150,12 +150,13 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Back to volunteer login */}
-        <div className="mt-4 text-center text-sm">
+      <div className="mt-3 text-center text-sm" style={{ color: "#7c5a3e" }}>
+          Volunteer{" "}
           <button
-            onClick={() => navigate("/login")}
-            style={{ color: "#7c5a3e" }}
+            onClick={() => navigate("/")}
+            style={{ color: "#4a7c59", fontWeight: 700 }}
           >
-            ← Back to Volunteer Login
+            Back to Volunteer Signup
           </button>
         </div>
       </div>
