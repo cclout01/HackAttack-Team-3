@@ -1,44 +1,62 @@
-"use client";
-
 import * as React from "react";
-import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
-
 import { cn } from "./utils";
 
-function HoverCard({
-  ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Root>) {
-  return <HoverCardPrimitive.Root data-slot="hover-card" {...props} />;
+interface HoverCardContextValue {
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-function HoverCardTrigger({
-  ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {
+const HoverCardContext = React.createContext<HoverCardContextValue>({ open: false, setOpen: () => {} });
+
+interface HoverCardProps {
+  children: React.ReactNode;
+  openDelay?: number;
+  closeDelay?: number;
+}
+
+const HoverCard = ({ children }: HoverCardProps) => {
+  const [open, setOpen] = React.useState(false);
+
   return (
-    <HoverCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />
+    <HoverCardContext.Provider value={{ open, setOpen }}>
+      <div className="relative inline-block">{children}</div>
+    </HoverCardContext.Provider>
   );
-}
+};
 
-function HoverCardContent({
-  className,
-  align = "center",
-  sideOffset = 4,
-  ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Content>) {
+const HoverCardTrigger = ({ children, asChild }: { children: React.ReactNode; asChild?: boolean }) => {
+  const { setOpen } = React.useContext(HoverCardContext);
+
   return (
-    <HoverCardPrimitive.Portal data-slot="hover-card-portal">
-      <HoverCardPrimitive.Content
-        data-slot="hover-card-content"
-        align={align}
-        sideOffset={sideOffset}
+    <div
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      {children}
+    </div>
+  );
+};
+
+const HoverCardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { align?: "start" | "center" | "end" }>(
+  ({ className, children, align = "center", ...props }, ref) => {
+    const { open } = React.useContext(HoverCardContext);
+
+    if (!open) return null;
+
+    return (
+      <div
+        ref={ref}
         className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-64 origin-(--radix-hover-card-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
-          className,
+          "absolute z-50 mt-2 w-64 rounded-2xl border bg-white p-4 shadow-md outline-none animate-in fade-in-0 zoom-in-95",
+          className
         )}
         {...props}
-      />
-    </HoverCardPrimitive.Portal>
-  );
-}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+HoverCardContent.displayName = "HoverCardContent";
 
 export { HoverCard, HoverCardTrigger, HoverCardContent };
