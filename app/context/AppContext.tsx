@@ -389,10 +389,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const getAllUsersForAdmin = async () => {
+  const getAllUsersForAdmin = async (): Promise<AdminUser[]> => {
     try {
-      const payload = await apiFetch<AdminUser[] | { users: AdminUser[] }>("/admin/users");
-      return Array.isArray(payload) ? payload : payload.users ?? [];
+      const payload = await apiFetch<any>("/admin/users");
+      const list: Array<{ id: string; name?: string; email?: string; role?: string }> =
+        Array.isArray(payload) ? payload : payload?.users ?? [];
+
+      return list.map((u) => ({
+        id: u.id,
+        name: u.name ?? "",
+        email: u.email ?? "",
+        role: normalizeRole(u.role) as AuthRole,
+      }));
     } catch {
       const volunteerUsers: AdminUser[] = volunteers.map((volunteer) => ({
         id: volunteer.id,
