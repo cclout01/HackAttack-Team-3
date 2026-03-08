@@ -25,7 +25,7 @@ public class AdminController {
     public void resetPassword(
         @RequestHeader("Role") String role,
         @PathVariable String id
-    ) {
+    ) throws Exception{
         if (!role.equals("ADMIN")) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
