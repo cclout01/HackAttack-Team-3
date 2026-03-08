@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Volunteer Board</title>
+<style>
+
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f5f3ef;
+}
+
+/* NAVBAR */
+
+.navbar{
+    background:#1f4f2f;
+    padding:12px 40px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.nav-links a{
+    color:white;
+    margin-left:20px;
+    text-decoration:none;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#2f7a47,#5e9c6c);
+    color:white;
+    text-align:center;
+    padding:60px 20px;
+}
+
+.hero h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.search{
+    margin-top:20px;
+}
+
+.search input{
+    width:400px;
+    padding:12px;
+    border-radius:25px;
+    border:none;
+}
+
+/* LAYOUT */
+
+.container{
+    display:flex;
+    padding:40px;
+    gap:30px;
+}
+
+/* FILTERS */
+
+.filters{
+    width:240px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+
+.filters h3{
+    margin-bottom:15px;
+}
+
+.filter-group{
+    margin-bottom:20px;
+}
+
+.filter-group button{
+    padding:6px 12px;
+    margin:4px;
+    border-radius:20px;
+    border:none;
+    background:#e7efe9;
+    cursor:pointer;
+}
+
+/* CARD GRID */
+
+.grid{
+    flex:1;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:20px;
+}
+
+/* CARDS */
+
+.card{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+}
+
+.card-body{
+    padding:15px;
+}
+
+.card-title{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.card-location{
+    color:#777;
+    font-size:14px;
+}
+
+.progress{
+    height:6px;
+    background:#eee;
+    margin-top:10px;
+    border-radius:4px;
+}
+
+.progress-bar{
+    height:100%;
+    width:60%;
+    background:#2f7a47;
+    border-radius:4px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+    <div><b>RootedGood</b></div>
+    <div class="nav-links">
+        <a href="#">Browse</a>
+        <a href="#">Volunteer</a>
+        <a href="#">Organization</a>
+        <a href="#">Profile</a>
+    </div>
+</div>
+
+
+<div class="hero">
+    <h1>Find Your Purpose,<br>Give Your Time.</h1>
+    <p>Connect with local organizations making a difference.</p>
+
+    <div class="search">
+        <input type="text" placeholder="Search by role, organization, or cause...">
+    </div>
+</div>
+
+
+
+<div class="container">
+
+
+<div class="filters">
+
+<h3>Filter Positions</h3>
+
+<div class="filter-group">
+<strong>Category</strong><br>
+<button>Environment</button>
+<button>Community</button>
+<button>Education</button>
+</div>
+
+<div class="filter-group">
+<strong>Location</strong><br>
+<button>Portland</button>
+<button>Seattle</button>
+<button>Austin</button>
+</div>
+
+<div class="filter-group">
+<strong>Urgency</strong><br>
+<button>High</button>
+<button>Medium</button>
+<button>Open</button>
+</div>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a">
+<div class="card-body">
+<div class="card-title">Animal Shelter Dog Walker</div>
+<div class="card-location">Austin, TX</div>
+
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+
+</div>
+</div>
+
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1469571486292-b53601020f8b">
+<div class="card-body">
+<div class="card-title">Food Pantry Volunteer</div>
+<div class="card-location">Seattle, WA</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:40%"></div>
+</div>
+
+</div>
+</div>
+
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+<div class="card-body">
+<div class="card-title">After School Math Tutor</div>
+<div class="card-location">Portland, OR</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:75%"></div>
+</div>
+
+</div>
+</div>
+
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+<div class="card-body">
+<div class="card-title">Tree Planting Brigade</div>
+<div class="card-location">Portland, OR</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:55%"></div>
+</div>
+
+</div>
+</div>
+
+
+</div>
+</div>
+
+</body>
+</html>
