@@ -3,11 +3,12 @@ import { Search, SlidersHorizontal, X, Leaf, MapPin, Clock, Flame, ChevronDown, 
 import { useApp } from "app/context/AppContext";
 import { PositionCard } from "app/components/PositionCard";
 import type { Position } from "app/data/mockData";
+import { useNavigate } from "react-router";
 
 const CATEGORIES = ["All", "Environment", "Food Security", "Animal Welfare", "Education", "Community", "Healthcare", "Arts & Culture"];
 const LOCATIONS = ["All", "Portland, OR", "Austin, TX", "Seattle, WA", "Chicago, IL", "Denver, CO"];
 const URGENCIES = ["All", "critical", "high", "medium", "low"];
-const MONTHS = ["All", "March", "April", "May", "June", "July", "August"];
+const MONTHS = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const TIME_COMMITMENTS = ["All", "1-2 hours", "Half day", "Full day", "Weekly", "Ongoing"];
 
 const urgencyLabels: Record<string, string> = {
@@ -27,6 +28,7 @@ export default function Home() {
   const [timeCommitment, setTimeCommitment] = useState("All");
   const [showFilters, setShowFilters] = useState(true);
   const [sortBy, setSortBy] = useState<"date" | "urgency" | "spots">("date");
+  const navigate = useNavigate();
 
   const filteredPositions = useMemo(() => {
     let result = positions.filter((p) => p.status !== "completed");
@@ -90,6 +92,25 @@ export default function Home() {
           }}
         />
         <div className="relative max-w-5xl mx-auto px-6 py-16 text-center">
+           <div className="absolute top-6 right-6 flex gap-3">
+            <button
+              type="button"
+              onClick={() => navigate("/volunteer/profile")}
+              className="px-4 py-2 rounded-lg text-sm"
+              style={{ backgroundColor: "#4a7c59", color: "#fff", fontWeight: 600 }}
+            >
+              My Profile
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/logoutPage")}
+              className="px-4 py-2 rounded-lg text-sm"
+              style={{ backgroundColor: "#7c5a3e", color: "#fff", fontWeight: 600 }}
+            >
+              Logout
+            </button>
+          </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Leaf size={18} style={{ color: "#a8c5a0" }} />
             <span className="text-sm tracking-widest uppercase" style={{ color: "#a8c5a0", letterSpacing: "0.12em" }}>

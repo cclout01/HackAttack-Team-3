@@ -6,10 +6,11 @@ export default [
   route("admin-login", "routes/admin-login.tsx"),
   route("admin-signup", "routes/admin-signup.tsx"),
   route("volunteersignup", "routes/volunteersignup.tsx"),
+  route("volunteer/profile", "routes/Profilepage.tsx"),
   route("position/:id", "routes/PositonDetail.tsx"),
   route("org/dashboard", "routes/OrgDashboard.tsx"),
   route("org/post", "routes/postposition.tsx"),
   route("org/edit/:id", "routes/editPosition.tsx"),
-  route("volunteer/profile", "routes/VolunteerDashboard.tsx"),
   route("certificate/:completionId", "routes/certificatepage.tsx"),
+  route("logoutPage", "routes/logoutPage.tsx"),
 ] satisfies RouteConfig;
