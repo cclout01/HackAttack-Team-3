@@ -61,6 +61,19 @@ http://localhost:8080
 
 Keep this terminal open.
 
+## 5. Run the Frontend
+
+Open a second terminal and run from the project root:
+
+npm install
+npm run dev
+
+The frontend should run on:
+
+http://localhost:5173
+
+Keep this terminal open as well.
+
 ### 6. Open the Website
 
 Once both servers are running, open:
@@ -79,7 +92,7 @@ The frontend uses port 5173.
 
 If either port is already in use, please stop the other process using it.
 
-##8. Quick Start Summary
+## 8. Quick Start Summary
 Terminal 1
 
 cd backend
@@ -96,7 +109,7 @@ Open:
 
 http://localhost:5173
 
-##9. Troubleshooting
+## 9. Troubleshooting
 Backend does not start
 
 Make sure Java is installed correctly
