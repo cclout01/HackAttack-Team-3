@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { Award, Clock, MapPin, Calendar, CheckCircle, Leaf, ChevronRight, Star } from "lucide-react";
 import { useApp } from "../context/AppContext";
 
-export function VolunteerProfile() {
+export default function VolunteerProfile() {
   const { currentVolunteer, getPosition, getOrg, getVolunteerCompletions, completions } = useApp();
 
   const signedUpPositions = currentVolunteer.signedUpPositions
@@ -21,6 +21,19 @@ export function VolunteerProfile() {
       {/* Profile Hero */}
       <div style={{ background: "linear-gradient(135deg, #4a2f1a 0%, #7c5a3e 60%, #4a7c59 100%)" }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+          <div className="mb-4">
+            <Link
+              to="/home"
+              className="inline-block px-4 py-2 rounded-xl text-sm"
+              style={{
+                backgroundColor: "#4a7c59",
+                color: "#d4e8d8",
+                fontWeight: 600,
+              }}
+            >
+              ← Back to Home
+            </Link>
+          </div>
           <div className="flex flex-wrap items-start gap-5">
             {/* Avatar */}
             <div
